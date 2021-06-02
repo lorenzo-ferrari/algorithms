@@ -1,3 +1,3 @@
 # Algorithms
 
-C++ implementations of Data Structures and Algorithms
+Algorithms and data structures implemented in c++
