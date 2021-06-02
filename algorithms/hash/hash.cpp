@@ -12,13 +12,13 @@
 #include <vector>
 
 class Hash {
+private:
 	long long N, P, MOD;
 	std::string S;
 	std::vector<long long> pw;
 	std::vector<long long> prf;
 
-	public:
-
+public:
 	Hash(int n, int p, long long mod, std::string s) : N(n), S(s), P(p), MOD(mod) {
 		pw.resize(N+1);
 		prf.resize(N+1);
@@ -31,7 +31,7 @@ class Hash {
 	}
 
 	bool cmpr(int i, int j, int len) { // [i, i+len)
-	if (i > j) std::swap(i, j);
+		if (i > j) std::swap(i, j);
 		long long h1 = ((prf[i + len] - prf[i] + MOD) % MOD) * pw[j - i] % MOD;
 		long long h2 = ((prf[j + len] - prf[j] + MOD) % MOD);
 
