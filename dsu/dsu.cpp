@@ -2,9 +2,11 @@
 
 class dsu {
 	std::vector<int> p;
+	std::vector<int> s;
 public:
 	dsu(int n) {
 		p.assign(n, 0);
+		s.assign(n, 1);
 		while (n--)
 			p[n] = n;
 	}
@@ -16,7 +18,9 @@ public:
 	bool union_set(int a, int b) {
 		a = find_set(a);
 		b = find_set(b);
+		if (a == b)	return false;
+		if (s[a] < s[b]) std::swap(a, b);
 		p[b] = a;
-		return a ^ b;
+		return true;
 	}		
 };
