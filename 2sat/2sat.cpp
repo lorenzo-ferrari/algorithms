@@ -1,4 +1,3 @@
-// https://cses.fi/problemset/task/1684
 #include <algorithm>
 #include <functional>
 #include <iostream>
@@ -75,7 +74,8 @@ public:
 };
 
 
-std::vector<bool> twoSat(int n, int m, std::vector<int> negx, std::vector<int> x, std::vector<int> negy, std::vector<int> y) {
+std::vector<bool> twoSat(int n, int m, std::vector<int> negx,
+std::vector<int> x, std::vector<int> negy, std::vector<int> y) {
     std::vector<std::vector<int>> g(2 * m);
     for (int i = 0, tx, ty; i < n; ++i) {
         tx = (x[i] << 1) ^ negx[i];
