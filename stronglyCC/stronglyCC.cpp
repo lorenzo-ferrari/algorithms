@@ -42,10 +42,29 @@ public:
         reverse(o.begin(), o.end());
         for (int i : o) {
             if (!vis[i]) {
-                C++;
                 dfs2(i);
+                C++;
             }
         }
+    }
+
+    int size() {
+        return C;
+    }
+
+    std::vector<std::vector<int>> cgraph() {
+        std::vector<std::vector<int>> cg(C);
+        for (int i = 0; i < n; ++i)
+            for (int j : g[i])
+                cg[c[i]].push_back(c[j]);
+        return cg;
+    }
+
+    std::vector<std::vector<int>> comps() {
+        std::vector<std::vector<int>> ans(C);
+        for (int i = 0; i < n; ++i)
+            ans[c[i]].push_back(i);
+        return ans;
     }
 
     int operator [](int i) { return c[i]; }
