@@ -1,10 +1,12 @@
 #include <algorithm>
 #include <vector>
 
-class cc {
+
+class components_t {
     int n;
     std::vector<std::vector<int>> g;
     std::vector<std::vector<int>> r;
+    int C = 0;
     std::vector<bool> vis;
     std::vector<int> c;
     std::vector<int> o;
@@ -26,8 +28,7 @@ class cc {
     }
 
 public:
-    int C = 0;
-    cc (int n, std::vector<std::vector<int>>& g) : n(n), g(g) {
+    components_t (int n, std::vector<std::vector<int>>& g) : n(n), g(g) {
         r.resize(n);
         for (int i = 0; i < n; ++i)
             for (int u : g[i])
@@ -60,7 +61,7 @@ public:
         return cg;
     }
 
-    std::vector<std::vector<int>> comps() {
+    std::vector<std::vector<int>> lists() {
         std::vector<std::vector<int>> ans(C);
         for (int i = 0; i < n; ++i)
             ans[c[i]].push_back(i);
@@ -69,3 +70,4 @@ public:
 
     int operator [](int i) { return c[i]; }
 };
+
