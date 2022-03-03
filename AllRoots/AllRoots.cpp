@@ -1,7 +1,7 @@
 #include <vector>
 using namespace std;
 
-class RerootDP {
+class AllRoots {
   // determine for each node the sum of the distances from the node to all other
   // nodes
   using LL = long long;
@@ -41,7 +41,7 @@ class RerootDP {
   }
 
 public:
-  explicit RerootDP(int _n, const vector<vector<int>>& _adj) : n(_n), adj(_adj) {
+  explicit AllRoots(int _n, const vector<vector<int>>& _adj) : n(_n), adj(_adj) {
     ans.assign(n, -1);
     sum.assign(n, 0);
     cnt.assign(n, 1);
