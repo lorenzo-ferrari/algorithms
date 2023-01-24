@@ -4,9 +4,7 @@ class dsu {
 	std::vector<int> p;
 	std::vector<int> s;
 public:
-	dsu(int n) {
-		p.assign(n, 0);
-		s.assign(n, 1);
+	dsu(int n) : p(n), s(n, 1) {
 		while (n--)
 			p[n] = n;
 	}
