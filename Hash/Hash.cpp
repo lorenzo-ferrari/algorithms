@@ -2,61 +2,49 @@
  *	Rabin-Karp rolling hash
  */
 
+#include <array>
 #include <string>
 #include <vector>
+using namespace std;
+using LL = long long;
 
 class Hash {
- private:
-  long long N;
-  long long P;
-  long long MOD;
-  std::string S;
-  std::vector<long long> pw;
-  std::vector<long long> prf;
+private:
+    static constexpr int SZ = 2;
+    static constexpr LL mod = 2e9 + 11;
+    static constexpr array<LL, SZ> pr{29, 31};
+    
+public:
+    int n;
+    string s;
+    vector<array<LL, SZ>> hsh;
+    vector<array<LL, SZ>> pws;
 
- public:
-  Hash(int n, int p, long long mod, std::string s)
-      : N(n), P(p), MOD(mod), S(s) {
-    pw.resize(N + 1);
-    prf.resize(N + 1);
+    Hash(int _n, string _s) : n(_n), s(_s) {
+        hsh.resize(n + 1);
+        pws.resize(n + 1);
+        for (int j = 0; j < SZ; ++j) {
+            hsh[0][j] = 0;
+            pws[0][j] = 1;
+        }
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 0; j < SZ; ++j) {
+                pws[i][j] = pws[i - 1][j] * pr[j] % mod;
+                hsh[i][j] = pr[j] * hsh[i - 1][j] + (s[i - 1] - '`');
+                hsh[i][j] %= mod;
+            }
+        }
+    }
 
-    pw[0] = 1;
-    for (int i = 0; i < N; i++) {
-      pw[i + 1] = pw[i] * P % MOD;
-      prf[i + 1] = (prf[i] + (S[i] - 'a') * pw[i] % MOD) % MOD;
+    array<LL, SZ> get_hash(int l, int len) {
+        array<LL, SZ> ans;
+        for (int j = 0; j < SZ; ++j) {
+            ans[j] = (hsh[l + len][j] - hsh[l][j] * pws[len][j] % mod + mod) % mod;
+        }
+        return ans;
     }
-  }
 
-  bool same(int i, int j, int len) {  // [i, i+len)
-    if (i > j) std::swap(i, j);
-    long long h1 = ((prf[i + len] - prf[i] + MOD) % MOD) * pw[j - i] % MOD;
-    long long h2 = ((prf[j + len] - prf[j] + MOD) % MOD);
-    return h1 == h2;
-  }
-
-  bool less(int i, int len_i, int j, int len_j) {
-    if (len_i == len_j && same(i, j, len_i)) {
-      return false;
+    bool same(int l, int r, int len) {
+        return get_hash(l, len) == get_hash(r, len);
     }
-    if (S[i] != S[j]) {  // average case
-      return S[i] < S[j];
-    }
-    int l = 0;
-    int r = std::min(len_i, len_j) + 1;
-    while (r - l > 1) {
-      int mid = (l + r) / 2;
-      if (same(i, j, mid))
-        l = mid;
-      else
-        r = mid;
-    }
-    return S[i + l] < S[j + l];
-  }
-
-  bool greater(int i, int len_i, int j, int len_j) {
-    if (len_i == len_j && same(i, j, len_i)) {
-      return false;
-    }
-    return !less(i, len_i, j, len_j);
-  }
 };
