@@ -10,6 +10,7 @@ int dfs(int n, int s, int e, vector<vector<int>> &g, vector<vector<int>> &c, vec
 	while (!st.empty()) {
 		int v = st.top().first;
 		int flow = st.top().second;
+        st.pop();
 
 		for (int u : g[v])
 			if (par[u] == -1 && c[v][u]) {
