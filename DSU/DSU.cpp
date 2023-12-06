@@ -19,6 +19,7 @@ public:
 		if (a == b)	return false;
 		if (s[a] < s[b]) std::swap(a, b);
 		p[b] = a;
+        s[a] += s[b];
 		return true;
 	}		
 };
