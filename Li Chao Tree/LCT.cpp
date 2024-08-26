@@ -4,8 +4,6 @@
 using namespace std;
 using LL = long long;
 
-#define all(x) x.begin(), x.end()
-
 struct fn {
   LL m, q;
   explicit fn(LL _m, LL _q) : m(_m), q(_q) {}
@@ -18,14 +16,14 @@ struct LCT_ZIP {
   vector<LL> qs;
   vector<fn> history;
   explicit LCT_ZIP(vector<LL> _qs) : qs(_qs) {
-    sort(all(qs));
-    qs.resize(unique(all(qs)) - qs.begin());
+    sort(begin(qs), end(qs));
+    qs.resize(unique(begin(qs), end(qs)) - begin(qs));
     n = qs.size();
     t.assign(4 * n, fn(0, 1e15));
   }
   explicit LCT_ZIP(int _n) {
     vector<LL> q(_n);
-    iota(q.begin(), q.end(), 0);
+    iota(begin(q), end(q), 0);
     *this = LCT_ZIP(q);
   }
   void add_fn(fn f) {
